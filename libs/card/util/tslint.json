@@ -1,0 +1,7 @@
+{
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [true, "attribute", "card-games", "camelCase"],
+    "component-selector": [true, "element", "card-games", "kebab-case"]
+  }
+}

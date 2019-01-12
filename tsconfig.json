@@ -16,6 +16,12 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@card-games/card-util": [
+        "libs/card/util/src/index.ts"
+      ],
+      "@card-games/card-ui": [
+        "libs/card/ui/src/index.ts"
+      ]
     }
   },
   "exclude": [

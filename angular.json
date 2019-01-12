@@ -2,7 +2,64 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "",
-  "projects": {},
+  "projects": {
+    "card-util": {
+      "root": "libs/card/util",
+      "sourceRoot": "libs/card/util/src",
+      "projectType": "library",
+      "prefix": "card-games",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/card/util/src/test.ts",
+            "tsConfig": "libs/card/util/tsconfig.spec.json",
+            "karmaConfig": "libs/card/util/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/card/util/tsconfig.lib.json",
+              "libs/card/util/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "card-ui": {
+      "root": "libs/card/ui",
+      "sourceRoot": "libs/card/ui/src",
+      "projectType": "library",
+      "prefix": "card-games",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/card/ui/src/test.ts",
+            "tsConfig": "libs/card/ui/tsconfig.spec.json",
+            "karmaConfig": "libs/card/ui/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/card/ui/tsconfig.lib.json",
+              "libs/card/ui/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
   "cli": {
     "warnings": {
       "typescriptMismatch": false,
@@ -10,5 +67,6 @@
     },
     "defaultCollection": "@nrwl/schematics",
     "packageManager": "yarn"
-  }
+  },
+  "defaultProject": "card-util"
 }

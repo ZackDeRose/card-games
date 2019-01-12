@@ -7,5 +7,18 @@
     "tslint.json": "*",
     "nx.json": "*"
   },
-  "projects": {}
+  "projects": {
+    "card-util": {
+      "tags": [
+        "scope:card",
+        "type:util"
+      ]
+    },
+    "card-ui": {
+      "tags": [
+        "scope:card",
+        "type:ui"
+      ]
+    }
+  }
 }
