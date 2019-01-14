@@ -4,7 +4,7 @@ import { Dictionary } from './dictionary';
 import { shortenedCardName } from './utility-functions';
 
 describe('CardSet class', () => {
-  beforeEach(() => spyOn(console, 'warn').and.callThrough());
+  let warnSpy: jest.SpyInstance;
 
   describe('constructor', () => {
     describe('without an argument', () => {
@@ -75,6 +75,7 @@ describe('CardSet class', () => {
         TT: -4,
         'King of Clubs': 1
       };
+      const warnSpy = jest.spyOn(global.console, 'warn');
       const result = new CardSet(dictionary);
 
       it('should create a CardSet of the valid members', () => {
@@ -82,15 +83,17 @@ describe('CardSet class', () => {
         expect(result.cards).toEqual(expected);
       });
 
-      xit('should log a warning for each misformatted member', () => {
+      it('should log a warning for each misformatted member', () => {
+        expect(warnSpy).toHaveBeenCalled();
+
         const warningMsgForKingOfCarbs = `WARNING: Invalid key for | key: 'King of Carbs', value: 1 |. These cards were not added to the CardSet.`;
-        expect(console.warn).toHaveBeenCalledWith(warningMsgForKingOfCarbs);
+        expect(warnSpy).toHaveBeenCalledWith(warningMsgForKingOfCarbs);
 
         const warningMsgForKingOfDiamonds = `WARNING: Invalid value for | key: 'King of Diamonds', value: 0 |. These cards were not added to the CardSet.`;
-        expect(console.warn).toHaveBeenCalledWith(warningMsgForKingOfDiamonds);
+        expect(warnSpy).toHaveBeenCalledWith(warningMsgForKingOfDiamonds);
 
         const warningMsgForTT = `WARNING: Invalid key and value for | key: 'TT', value: -4 |. These cards were not added to the CardSet.`;
-        expect(console.warn).toHaveBeenCalledWith(warningMsgForTT);
+        expect(warnSpy).toHaveBeenCalledWith(warningMsgForTT);
       });
     });
 
@@ -121,6 +124,7 @@ describe('CardSet class', () => {
 
     describe('with an array of card names that includes an improperly formatted name', () => {
       const array = ['King of Carbs', 'King of Diamonds', 'TT', 'K♣'];
+      const warnSpy = jest.spyOn(global.console, 'warn');
       const result = new CardSet(array);
 
       it('should create a CardSet of the valid members', () => {
@@ -128,12 +132,12 @@ describe('CardSet class', () => {
         expect(result.cards).toEqual(expected);
       });
 
-      xit('should log a warning for each misformatted member', () => {
+      it('should log a warning for each misformatted member', () => {
         const warningMsgForKingOfCarbs = `WARNING: Invalid card name: 'King of Carbs'. This card was not added to the CardSet.`;
-        expect(console.warn).toHaveBeenCalledWith(warningMsgForKingOfCarbs);
+        expect(warnSpy).toHaveBeenCalledWith(warningMsgForKingOfCarbs);
 
         const warningMsgForTT = `WARNING: Invalid card name: 'TT'. This card was not added to the CardSet.`;
-        expect(console.warn).toHaveBeenCalledWith(warningMsgForTT);
+        expect(warnSpy).toHaveBeenCalledWith(warningMsgForTT);
       });
     });
 
@@ -154,6 +158,20 @@ describe('CardSet class', () => {
         };
 
         expect(result.cards).toEqual(expected);
+      });
+    });
+
+    describe('with cards with multiple cards of the same suit but different rank', () => {
+      const dictionary = {
+        'A♠': 1,
+        'A❤': 2,
+        '2❤': 2,
+        'K♣': 1
+      };
+      const result = new CardSet(dictionary);
+
+      it('should result in a object whose cards property is equivalent to the parameter', () => {
+        expect(result.cards).toEqual(dictionary);
       });
     });
   });
@@ -240,6 +258,7 @@ describe('CardSet class', () => {
 
       describe('that is not valid', () => {
         const newName = 'Zack';
+        const warnSpy = jest.spyOn(global.console, 'warn');
         const newSet = new CardSet(cards);
         newSet.add(newName);
         const expectedSet = new CardSet(cards);
@@ -249,9 +268,9 @@ describe('CardSet class', () => {
         it('should not affect the count since no cards were added', () => {
           expect(newSet.count).toBe(4);
         });
-        xit('should warn the user that the add failed', () => {
-          const warningMsg = `WARNING: Invalid card name: ${newName}. This card was not added to the CardSet.`;
-          expect(console.warn).toHaveBeenCalledWith(warningMsg);
+        it('should warn the user that the add failed', () => {
+          const warningMsg = `WARNING: Invalid card name: '${newName}'. This card was not added to the CardSet.`;
+          expect(warnSpy).toHaveBeenCalledWith(warningMsg);
         });
       });
     });
@@ -275,6 +294,7 @@ describe('CardSet class', () => {
         'TT',
         'K♣'
       ];
+      const warnSpy = jest.spyOn(global.console, 'warn');
       resultSet.add(arrayOfCardsToAdd);
 
       it('should add valid members to the set', () => {
@@ -291,14 +311,12 @@ describe('CardSet class', () => {
         expect(resultSet.count).toBe(6);
       });
 
-      xit('should log a warning for each misformatted member', () => {
+      it('should log a warning for each misformatted member', () => {
         const warningMsgForKingOfCarbs = `WARNING: Invalid card name: 'King of Carbs'. This card was not added to the CardSet.`;
-        expect(console.warn).toHaveBeenCalledWith(warningMsgForKingOfCarbs);
+        expect(warnSpy).toHaveBeenCalledWith(warningMsgForKingOfCarbs);
 
         const warningMsgForTT = `WARNING: Invalid card name: 'TT'. This card was not added to the CardSet.`;
-        expect(console.warn).toHaveBeenCalledWith(warningMsgForTT);
-
-        expect(console.warn).toHaveBeenCalledTimes(2);
+        expect(warnSpy).toHaveBeenCalledWith(warningMsgForTT);
       });
     });
     describe('with an array of cards', () => {
@@ -434,16 +452,16 @@ describe('CardSet class', () => {
         const set = new CardSet(startingCards);
         const startingDict = set.cards;
         const cardName = 'Dooby dooby doo';
+        const warnSpy = jest.spyOn(global.console, 'warn');
         const removed = set.remove(cardName);
 
         it('should not alter the set', () => {
           expect(set.cards).toEqual(startingDict);
         });
 
-        xit('should warn that the card is invalid', () => {
-          expect(console.warn).toHaveBeenCalledTimes(1);
-          const warnMsg = `WARNING: Invalid card name: '${cardName}'. This remove() call is being ignored.`;
-          expect(console.warn).toHaveBeenCalledWith(warnMsg);
+        it('should warn that the card is invalid', () => {
+          const warnMsg = `WARNING: Invalid card name: '${cardName}'. This card is being ignored from the remove() call.`;
+          expect(warnSpy).toHaveBeenCalledWith(warnMsg);
         });
 
         it('should return an empty CardSet', () => {
@@ -514,16 +532,15 @@ describe('CardSet class', () => {
         'TT',
         'K♣'
       ];
+      const warnSpy = jest.spyOn(global.console, 'warn');
       const removed = set.remove(arrayOfCardsToRemove);
 
-      xit('should warn for each invalid card name', () => {
-        expect(console.warn).toHaveBeenCalledTimes(2);
-
+      it('should warn for each invalid card name', () => {
         const carbsWarnMsg = `WARNING: Invalid card name: 'King of Carbs'. This card is being ignored from the remove() call.`;
-        expect(console.warn).toHaveBeenCalledWith(carbsWarnMsg);
+        expect(warnSpy).toHaveBeenCalledWith(carbsWarnMsg);
 
         const ttWarnMsg = `WARNING: Invalid card name: 'TT'. This card is being ignored from the remove() call.`;
-        expect(console.warn).toHaveBeenCalledWith(ttWarnMsg);
+        expect(warnSpy).toHaveBeenCalledWith(ttWarnMsg);
       });
 
       it('should remove valid card names from the set', () => {

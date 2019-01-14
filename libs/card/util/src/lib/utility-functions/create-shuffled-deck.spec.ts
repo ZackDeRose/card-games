@@ -6,7 +6,7 @@ describe('createShuffledDeck() function', () => {
     const shuffledDeck = createShuffledDeck();
     expect(shuffledDeck.length).toBe(52);
     for (const card of testUnshuffledDeck) {
-      expect(shuffledDeck).toContain(card);
+      expect(shuffledDeck).toContainEqual(card);
     }
   });
 });

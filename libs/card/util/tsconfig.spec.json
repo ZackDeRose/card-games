@@ -1,9 +1,10 @@
 {
   "extends": "../../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../../dist/out-tsc/libs/card",
-    "types": ["jasmine", "node"]
+    "outDir": "../../../dist/out-tsc/libs/card/util",
+    "module": "commonjs",
+    "types": ["jest", "node"]
   },
-  "files": ["src/test.ts"],
+  "files": ["src/test-setup.ts"],
   "include": ["**/*.spec.ts", "**/*.d.ts"]
 }

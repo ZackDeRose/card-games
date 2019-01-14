@@ -39,12 +39,12 @@ describe('createCardFromCardName() utility function', () => {
   describe('invalid card names', () => {
     describe('2-character card name', () => {
       const invalidName = 'TF';
+      const warnSpy = jest.spyOn(global.console, 'warn');
       const result = createCardFromCardName(invalidName);
 
-      xit('should warn that an invalid name was used', () => {
+      it('should warn that an invalid name was used', () => {
         const warnMsg = `WARN: createCardFromCardName() was called with the invalid card name: '${invalidName}'`;
-        expect(console.warn).toHaveBeenCalledWith(warnMsg);
-        expect(console.warn).toHaveBeenCalled();
+        expect(warnSpy).toHaveBeenCalledWith(warnMsg);
       });
       it('should return null', () => {
         expect(result).toBeNull();
@@ -54,11 +54,12 @@ describe('createCardFromCardName() utility function', () => {
 
   describe('full card names', () => {
     const invalidName = 'Dooby dooby doo';
+    const warnSpy = jest.spyOn(global.console, 'warn');
     const result = createCardFromCardName(invalidName);
 
-    xit('should warn that an invalid name was used', () => {
+    it('should warn that an invalid name was used', () => {
       const warnMsg = `WARN: createCardFromCardName() was called with the invalid card name: '${invalidName}'`;
-      expect(console.warn).toHaveBeenCalledWith(warnMsg);
+      expect(warnSpy).toHaveBeenCalledWith(warnMsg);
     });
     it('should return null', () => {
       expect(result).toBeNull();

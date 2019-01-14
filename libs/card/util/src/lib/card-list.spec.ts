@@ -37,9 +37,7 @@ describe('CardList abstract class', () => {
         expect(shuffledList).not.toEqual(unshuffledList); // shuffled (Extremely high likelihood this should pass)
         expect(shuffledList.length).toBe(unshuffledList.length);
         for (const unshuffledCard of unshuffledList) {
-          expect(shuffledList).toContain(
-            jasmine.objectContaining(unshuffledCard)
-          ); // all cards accounted for
+          expect(shuffledList).toContainEqual(unshuffledCard)
         }
       });
     });

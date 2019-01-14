@@ -45,18 +45,12 @@ export class CardSet {
         if (!byRankThenSuit[card.rank]) {
           byRankThenSuit[card.rank] = {};
         }
-        if (!byRankThenSuit[card.rank][card.suit]) {
-          byRankThenSuit[card.rank][card.suit] = 0;
-        }
-        byRankThenSuit[card.rank][card.suit] += count;
+        byRankThenSuit[card.rank][card.suit] = count;
 
         if (!bySuitThenRank[card.suit]) {
           bySuitThenRank[card.suit] = {};
         }
-        if (!bySuitThenRank[card.suit][card.rank]) {
-          bySuitThenRank[card.suit][card.rank] = 0;
-        }
-        bySuitThenRank[card.suit][card.rank] += count;
+        bySuitThenRank[card.suit][card.rank] = count;
 
         count += counts;
       }
@@ -153,13 +147,13 @@ export class CardSet {
     for (const [cardName, count] of Object.entries(inc)) {
       const card = createCardFromCardName(cardName);
       if (!card && count <= 0) {
-        const warningMsg = `WARNING: Invalid key and value for | key: ${cardName}, value: ${count} |. These cards were not added to the CardSet.`;
+        const warningMsg = `WARNING: Invalid key and value for | key: '${cardName}', value: ${count} |. These cards were not added to the CardSet.`;
         console.warn(warningMsg);
       } else if (!card) {
-        const warningMsg = `WARNING: Invalid key for | key: ${cardName}, value: ${count} |. These cards were not added to the CardSet.`;
+        const warningMsg = `WARNING: Invalid key for | key: '${cardName}', value: ${count} |. These cards were not added to the CardSet.`;
         console.warn(warningMsg);
       } else if (count <= 0) {
-        const warningMsg = `WARNING: Invalid value for | key: ${cardName}, value: ${count} |. These cards were not added to the CardSet.`;
+        const warningMsg = `WARNING: Invalid value for | key: '${cardName}', value: ${count} |. These cards were not added to the CardSet.`;
         console.warn(warningMsg);
       } else {
         const shortenedName = shortenedCardName(card);
@@ -176,7 +170,7 @@ export class CardSet {
     const card = createCardFromCardName(adding);
     if (!card) {
       console.warn(
-        `WARNING: Invalid card name: ${adding}. This card was not added to the CardSet.`
+        `WARNING: Invalid card name: '${adding}'. This card was not added to the CardSet.`
       );
       return;
     }
@@ -217,7 +211,7 @@ export class CardSet {
   private removeFromCardName(removing: string): CardSet {
     const card = createCardFromCardName(removing);
     if (!card) {
-      const warningMsg = `WARNING: Invalid card name: '${removing}'. This remove() call is being ignored.`;
+      const warningMsg = `WARNING: Invalid card name: '${removing}'. This card is being ignored from the remove() call.`;
       console.warn(warningMsg);
       return new CardSet();
     }

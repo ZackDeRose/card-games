@@ -9,24 +9,25 @@
       "projectType": "library",
       "prefix": "card-games",
       "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/card/util/src/test.ts",
-            "tsConfig": "libs/card/util/tsconfig.spec.json",
-            "karmaConfig": "libs/card/util/karma.conf.js"
-          }
-        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
               "libs/card/util/tsconfig.lib.json",
+              "libs/card/util/tsconfig.spec.json",
               "libs/card/util/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/card/util/jest.config.js",
+            "tsConfig": "libs/card/util/tsconfig.spec.json",
+            "setupFile": "libs/card/util/src/test-setup.ts"
           }
         }
       }
@@ -37,24 +38,227 @@
       "projectType": "library",
       "prefix": "card-games",
       "architect": {
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "main": "libs/card/ui/src/test.ts",
+            "tsConfig": [
+              "libs/card/ui/tsconfig.lib.json",
+              "libs/card/ui/tsconfig.spec.json",
+              "libs/card/ui/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/card/ui/jest.config.js",
             "tsConfig": "libs/card/ui/tsconfig.spec.json",
-            "karmaConfig": "libs/card/ui/karma.conf.js"
+            "setupFile": "libs/card/ui/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "desktop": {
+      "root": "apps/desktop/",
+      "sourceRoot": "apps/desktop/src",
+      "projectType": "application",
+      "prefix": "desktop",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/desktop",
+            "index": "apps/desktop/src/index.html",
+            "main": "apps/desktop/src/main.ts",
+            "polyfills": "apps/desktop/src/polyfills.ts",
+            "tsConfig": "apps/desktop/tsconfig.app.json",
+            "assets": [
+              "apps/desktop/src/favicon.ico",
+              "apps/desktop/src/assets"
+            ],
+            "styles": [
+              "apps/desktop/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/desktop/src/environments/environment.ts",
+                  "with": "apps/desktop/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "desktop:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "desktop:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "desktop:build"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/card/ui/tsconfig.lib.json",
-              "libs/card/ui/tsconfig.spec.json"
+              "apps/desktop/tsconfig.app.json",
+              "apps/desktop/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
             ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "apps/desktop/jest.config.js",
+            "tsConfig": "apps/desktop/tsconfig.spec.json",
+            "setupFile": "apps/desktop/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "desktop-e2e": {
+      "root": "apps/desktop-e2e",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/builders:cypress",
+          "options": {
+            "cypressConfig": "apps/desktop-e2e/cypress.json",
+            "tsConfig": "apps/desktop-e2e/tsconfig.e2e.json",
+            "devServerTarget": "desktop:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "desktop:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/desktop-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "feature-mem-single": {
+      "root": "libs/memory-game/single-player/feature-shell",
+      "sourceRoot": "libs/memory-game/single-player/feature-shell/src",
+      "projectType": "library",
+      "prefix": "mem-single",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/memory-game/single-player/feature-shell/tsconfig.lib.json",
+              "libs/memory-game/single-player/feature-shell/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/memory-game/single-player/feature-shell/jest.config.js",
+            "tsConfig": "libs/memory-game/single-player/feature-shell/tsconfig.spec.json",
+            "setupFile": "libs/memory-game/single-player/feature-shell/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "ui-mem": {
+      "root": "libs/memory-game/ui",
+      "sourceRoot": "libs/memory-game/ui/src",
+      "projectType": "library",
+      "prefix": "ui-mem",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/memory-game/ui/tsconfig.lib.json",
+              "libs/memory-game/ui/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/memory-game/ui/jest.config.js",
+            "tsConfig": "libs/memory-game/ui/tsconfig.spec.json",
+            "setupFile": "libs/memory-game/ui/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "util-mem": {
+      "root": "libs/memory-game/util",
+      "sourceRoot": "libs/memory-game/util/src",
+      "projectType": "library",
+      "prefix": "card-games",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/memory-game/util/tsconfig.lib.json",
+              "libs/memory-game/util/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "libs/memory-game/util/jest.config.js",
+            "tsConfig": "libs/memory-game/util/tsconfig.spec.json"
           }
         }
       }
@@ -68,5 +272,5 @@
     "defaultCollection": "@nrwl/schematics",
     "packageManager": "yarn"
   },
-  "defaultProject": "card-util"
+  "defaultProject": "desktop"
 }

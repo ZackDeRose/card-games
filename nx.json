@@ -19,6 +19,33 @@
         "scope:card",
         "type:ui"
       ]
+    },
+    "desktop": {
+      "tags": [
+        "scope:app",
+        "platform:desktop"
+      ]
+    },
+    "desktop-e2e": {
+      "tags": []
+    },
+    "feature-mem-single": {
+      "tags": [
+        "scope:memory-game",
+        "type:feature"
+      ]
+    },
+    "ui-mem": {
+      "tags": [
+        "scope:memory-game",
+        "type:ui"
+      ]
+    },
+    "util-mem": {
+      "tags": [
+        "scope:memory-game",
+        "type:util"
+      ]
     }
   }
 }

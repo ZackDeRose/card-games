@@ -1,0 +1,1 @@
+export type MemoryGamePhase = 'pickFirstCard' | 'pickSecondCard' | 'gameOver';
