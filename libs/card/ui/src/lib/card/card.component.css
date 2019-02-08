@@ -1,0 +1,25 @@
+.can-click {
+  cursor: pointer
+}
+
+.selected {
+  border: 5px solid #9ecaed;
+  border-radius: 10px;
+  border-color: #9ecaed;
+}
+
+.not-selectable {
+  cursor: not-allowed;
+  opacity:0.5;
+}
+
+.not-selected {
+  border: 5px solid #dadada;
+  border-radius: 10px;
+}
+
+img {
+  height: auto;
+  width: 100%;
+  object-fit: scale-down
+}

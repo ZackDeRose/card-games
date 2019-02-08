@@ -1,0 +1,23 @@
+<mat-grid-list 
+  *ngIf="cardUis$ | async; let cardUis"
+  [cols]="columns"
+  [rowHeight]="rowHeight$ | async"
+  [gutterSize]="gutterSize$ | async"
+>
+  <ng-container *ngFor="let row of cardUis; let rowIndex = index">
+    <ng-container *ngFor="let card of row; let columnIndex = index">
+        <mat-grid-tile colspan="1" rowspan="1">
+          <card-games-card
+            [cardUiObj]="card"
+            (clicked)="clicked(rowIndex, columnIndex)"
+            (mousedOver)="mousedOver(card, rowIndex, columnIndex)"
+          >
+          </card-games-card>
+        </mat-grid-tile>
+    </ng-container>
+  </ng-container>
+  <!-- <pre>{{ cardUis | json }}</pre> -->
+</mat-grid-list>
+
+<!-- <pre>{{ _viewPortDimensions$ | json }}</pre> -->
+<!-- <pre>{{ rowHeight$ | async }}</pre> -->

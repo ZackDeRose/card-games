@@ -1,0 +1,1 @@
+export const CARD_HEIGHT_TO_WIDTH_RATIO = 1056 / 691;

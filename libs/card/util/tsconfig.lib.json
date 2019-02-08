@@ -12,7 +12,24 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "types": [],
-    "lib": ["dom", "es2018"]
+    "lib": ["dom", "es2018"],
+    "paths": {
+      "@card-games/card-util": [
+        "libs/card/util/src/index.ts"
+      ],
+      "@card-games/card-ui": [
+        "libs/card/ui/src/index.ts"
+      ],
+      "@card-games/feature-mem-single": [
+        "libs/memory-game/single-player/feature-shell/src/index.ts"
+      ],
+      "@card-games/ui-mem": [
+        "libs/memory-game/ui/src/index.ts"
+      ],
+      "@card-games/util-mem": [
+        "libs/memory-game/util/src/index.ts"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,

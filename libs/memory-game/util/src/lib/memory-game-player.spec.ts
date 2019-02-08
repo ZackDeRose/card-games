@@ -1,70 +1,79 @@
-import { ClientMemoryGamePlayer } from './client-memory-game-player.model';
 import { MemoryGamePlayer } from "./memory-game-player";
-import { createExpectedNewPlayer, expectToMatch } from '../test-utils/utils';
+import { createExpectedNewPlayerFromName, expectPlayerToMatchClientPlayer } from '../test-utils';
 
-// beforeEach(() => {
-//   console.log('boom');
-//   const memoryGamePlayerRef = MemoryGamePlayer as any;
-//   memoryGamePlayerRef._unnamedCount = 0;
-// });
-xdescribe('MemoryGamePlayer class', () => {
+
+beforeEach(() => {
+  const memoryGamePlayerRef = MemoryGamePlayer as any;
+  memoryGamePlayerRef._unnamedCount = 0;
+});
+
+describe('MemoryGamePlayer class', () => {
+
   describe('constructor', () => {
-    const ref = MemoryGamePlayer as any;
-    beforeEach(done => {
-      console.log(`start of beforeEach: ${ref._unnamedCount}`);
-      const memoryGamePlayerRef = MemoryGamePlayer as any;
-      memoryGamePlayerRef._unnamedCount = 0;
-      console.log(`end of beforeEach: ${ref._unnamedCount}`);
-      done();
-    });
+
     describe('Given a name parameter', () => {
-      console.log(ref._unnamedCount);
-      const name = 'Claire';
+      let name: string;
+      
+      beforeEach(() => name = 'Claire');
+      
       describe('When the constructor is called', () => {
-        const player = new MemoryGamePlayer(name);
-        it('should create a player object with the given name', done => {
-          const expected = createExpectedNewPlayer(name);
-          expectToMatch(player, expected);
-          done();
+        let player: MemoryGamePlayer;
+        
+        beforeEach(() => player = new MemoryGamePlayer(name));
+        
+        it('Then it should create a player object with the given name', () => {
+          const expected = createExpectedNewPlayerFromName(name);
+          expectPlayerToMatchClientPlayer(player, expected);
         });
+
       });
+
     });
+
     describe('Given no parameters', () => {
-      console.log(ref._unnamedCount);
+
       describe('When the constructor is called', () => {
-        const player = new MemoryGamePlayer();
-        it(`Then it should have a name of 'Player1'`, done => {
+        let player: MemoryGamePlayer;
+        
+        beforeEach(() => player = new MemoryGamePlayer());
+        
+        it(`Then it should have a name of 'Player1'`, () => {
           const expectedName = 'Player1';
-          const expected = createExpectedNewPlayer(expectedName);
-          expectToMatch(player, expected);
-          done();
+          const expected = createExpectedNewPlayerFromName(expectedName);
+          expectPlayerToMatchClientPlayer(player, expected);
         });
+
       });
+
     });
+
     describe('Given a series of named and unnamed players', () => {
-      console.log(ref._unnamedCount);
-      const names = [
-        'Averie',
-        null,
-        'Eli',
-        null,
-      ];
+      let names: string[];
+
+      beforeEach(() => names = [ 'Averie', null, 'Eli', null ]);
+      
       describe('When the constructors is called', () => {
-        const players = names.map(n => new MemoryGamePlayer(n));
-        it('Then it should assign names appropriately', done => {
+        let players: MemoryGamePlayer[];
+
+        beforeEach(() => players = names.map(n => new MemoryGamePlayer(n)));
+        
+        it('Then it should assign names appropriately', () => {
           const expectedNames = [
             'Averie',
             'Player1',
             'Eli',
             'Player2'
           ];
-          const expected = expectedNames.map(n => createExpectedNewPlayer(n));
+          const expected = expectedNames.map(n => createExpectedNewPlayerFromName(n));
           for (let i = 0; i < expected.length; i++) {
-            expectToMatch(players[i], expected[i]);
+            expectPlayerToMatchClientPlayer(players[i], expected[i]);
           }
-          done();
         });
+
       });
+
     })
+
   });
+
 });

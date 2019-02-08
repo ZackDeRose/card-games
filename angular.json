@@ -78,7 +78,12 @@
             "tsConfig": "apps/desktop/tsconfig.app.json",
             "assets": [
               "apps/desktop/src/favicon.ico",
-              "apps/desktop/src/assets"
+              "apps/desktop/src/assets",
+              {
+                "glob": "**/*",
+                "input": "libs/card/ui/src/assets",
+                "output": "/cards/assets"
+              }
             ],
             "styles": [
               "apps/desktop/src/styles.css"
@@ -258,7 +263,8 @@
           "builder": "@nrwl/builders:jest",
           "options": {
             "jestConfig": "libs/memory-game/util/jest.config.js",
-            "tsConfig": "libs/memory-game/util/tsconfig.spec.json"
+            "tsConfig": "libs/memory-game/util/tsconfig.spec.json",
+            "setupFile": "libs/memory-game/util/src/test-setup.ts"
           }
         }
       }

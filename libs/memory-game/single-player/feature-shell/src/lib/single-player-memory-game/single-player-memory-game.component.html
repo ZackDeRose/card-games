@@ -1,0 +1,3 @@
+<div *ngIf="board$ | async; let board">
+  <ui-mem-memory-game [model]="board" (userSelection)="processSelection($event)"></ui-mem-memory-game>
+</div>

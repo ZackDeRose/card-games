@@ -1,1 +1,9 @@
-<img [src]="imageSrc$ | async">
+<img
+  *ngIf="cardUiObj?.card"
+  [src]="imageSrc$ | async"
+  [class.can-click]="cardUiObj.clickable"
+  [class.not-selectable]="cardUiObj.notSelectable"
+  [class.selectable]="cardUiObj.selectable !== false && !cardUiObj.selected"
+  [class.selected]="cardUiObj.selected && cardUiObj.selectable !== false"
+  (click)="click()"
+>

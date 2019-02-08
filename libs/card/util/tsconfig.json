@@ -1,7 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "importHelpers": true,
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -19,7 +18,7 @@
     "baseUrl": ".",
     "paths": {
       "@card-games/card-util": [
-        "libs/card/util/src/index"
+        "libs/card/util/src/index.ts"
       ],
       "@card-games/card-ui": [
         "libs/card/ui/src/index.ts"

@@ -8,3 +8,4 @@ export * from './create-shuffled-deck';
 export * from './full-card-name';
 export * from './shortened-card-name';
 export * from './shuffle-cards';
+export * from './random-card';

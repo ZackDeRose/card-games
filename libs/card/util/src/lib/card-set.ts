@@ -1,8 +1,10 @@
+
 import { ShortenedRank } from './shortened-rank';
 import { Dictionary } from './dictionary';
 import { Card } from './card';
 import { BehaviorSubject } from 'rxjs';
-import { createCardFromCardName, shortenedCardName } from './utility-functions';
+import { createCardFromCardName } from './utility-functions/create-card-from-card-name';
+import { shortenedCardName } from './utility-functions/shortened-card-name';
 import {
   rankToShortenedRankMap,
   shortenedRankToRankMap,

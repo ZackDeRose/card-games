@@ -1,6 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -16,18 +17,25 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'desktop'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('desktop');
-  });
-
-  it('should render title in a h1 tag', () => {
+  it('should have a home link', async () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain(
-      'Welcome to desktop!'
-    );
+    const homeLink = compiled.querySelector('a');
+    expect(homeLink.textContent).toContain('Home');
+    const href = fixture.debugElement.query(By.css('a')).nativeElement.getAttribute('href');
+    expect(href).toBe('/');
+  });
+
+  it('should have a memory game link', async() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const memoryGameLinks = fixture.debugElement
+      .queryAll(By.css('a'))
+      .filter(x => x.nativeElement.textContent === 'Memory Game');
+    expect(memoryGameLinks.length).toBe(1);
+    const memoryGameLink = memoryGameLinks[0];
+    const href = memoryGameLink.nativeElement.getAttribute('href');
+    expect(href).toBe('/memory-game');
   });
 });
